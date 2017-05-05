@@ -96,7 +96,8 @@ public class Login extends JFrame {
 	{
 		//System.out.println("Button Pressed.");
 		dispose();
-		System.out.println("Name = "+name+" Address = "+address+" port= "+port);
+		//System.out.println("Name = "+name+" Address = "+address+" port= "+port);
+		new Client(name, address, port);
 	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
