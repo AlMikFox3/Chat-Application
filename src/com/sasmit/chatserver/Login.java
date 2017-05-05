@@ -83,10 +83,20 @@ public class Login extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//System.out.println("Button Pressed.");
-			}
+				String name = textName.getText();
+				String address = textIP.getText();
+				int port = Integer.parseInt(textPort.getText());
+				login(name, address, port);
+							}
 		});
 		btnLogin.setBounds(76, 264, 93, 32);
 		contentPane.add(btnLogin);
+	}
+	private void login(String name, String address, int port)
+	{
+		//System.out.println("Button Pressed.");
+		dispose();
+		System.out.println("Name = "+name+" Address = "+address+" port= "+port);
 	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
