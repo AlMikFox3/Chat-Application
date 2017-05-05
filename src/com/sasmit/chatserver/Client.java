@@ -14,6 +14,9 @@ import java.awt.GridBagLayout;
 import javax.swing.JTextArea;
 
 import java.awt.GridBagConstraints;
+import javax.swing.JButton;
+import java.awt.Insets;
+import javax.swing.JTextField;
 
 public class Client extends JFrame {
 
@@ -21,6 +24,7 @@ public class Client extends JFrame {
 	private JPanel contentPane;
 	private String name, address;
 	private int port;
+	private JTextField textMessage;
 	
 	public Client(String name, String address, int port) {
 		setTitle("Chat Client");
@@ -43,19 +47,42 @@ public class Client extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{30 ,845, 5};
+		gbl_contentPane.columnWidths = new int[]{30,820,25,5};
 		gbl_contentPane.rowHeights = new int[]{45,450,55};
-		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{1.0, 1.0};
 		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JTextArea txtrHistory = new JTextArea();
+		txtrHistory.setEditable(false);
 		GridBagConstraints gbc_txtrHistory = new GridBagConstraints();
+		gbc_txtrHistory.insets = new Insets(0, 0, 5, 5);
 		gbc_txtrHistory.fill = GridBagConstraints.BOTH;
 		gbc_txtrHistory.gridx = 1;
 		gbc_txtrHistory.gridy = 1;
+		gbc_txtrHistory.gridwidth = 2;
+		gbc_txtrHistory.insets = new Insets(0, 10, 5, 5);
 		contentPane.add(txtrHistory, gbc_txtrHistory);
+		
+		textMessage = new JTextField();
+		GridBagConstraints gbc_textMessage = new GridBagConstraints();
+		gbc_textMessage.insets = new Insets(0, 10, 0, 5);
+		gbc_textMessage.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textMessage.gridx = 1;
+		gbc_textMessage.gridy = 2;
+		contentPane.add(textMessage, gbc_textMessage);
+		textMessage.setColumns(10);
+		
+		JButton btnSend = new JButton("Send");
+		GridBagConstraints gbc_btnSend = new GridBagConstraints();
+		gbc_btnSend.insets = new Insets(0, 0, 0, 5);
+		gbc_btnSend.gridx = 2;
+		gbc_btnSend.gridy = 2;
+		contentPane.add(btnSend, gbc_btnSend);
 		setVisible(true);
+		
+		requestFocus();
+		textMessage.requestFocus();
 	}
 
 }
