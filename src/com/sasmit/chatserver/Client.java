@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -14,9 +15,17 @@ import java.awt.GridBagLayout;
 import javax.swing.JTextArea;
 
 import java.awt.GridBagConstraints;
+
 import javax.swing.JButton;
+
 import java.awt.Insets;
+
 import javax.swing.JTextField;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Client extends JFrame {
 
@@ -25,6 +34,7 @@ public class Client extends JFrame {
 	private String name, address;
 	private int port;
 	private JTextField textMessage;
+	private JTextArea txtrHistory;
 	
 	public Client(String name, String address, int port) {
 		setTitle("Chat Client");
@@ -32,6 +42,7 @@ public class Client extends JFrame {
 		this.address = address;
 		this.port = port;
 		createWindow();
+		console("User "+name+" is attempting a connection to "+address+":"+port);
 	}
 	private void createWindow()
 	{
@@ -53,18 +64,26 @@ public class Client extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JTextArea txtrHistory = new JTextArea();
+		txtrHistory = new JTextArea();
+		JScrollPane scrollPane = new JScrollPane(txtrHistory);
 		txtrHistory.setEditable(false);
-		GridBagConstraints gbc_txtrHistory = new GridBagConstraints();
-		gbc_txtrHistory.insets = new Insets(0, 0, 5, 5);
-		gbc_txtrHistory.fill = GridBagConstraints.BOTH;
-		gbc_txtrHistory.gridx = 1;
-		gbc_txtrHistory.gridy = 1;
-		gbc_txtrHistory.gridwidth = 2;
-		gbc_txtrHistory.insets = new Insets(0, 10, 5, 5);
-		contentPane.add(txtrHistory, gbc_txtrHistory);
+		GridBagConstraints scrollConstraints = new GridBagConstraints();
+		scrollConstraints.insets = new Insets(0, 0, 5, 5);
+		scrollConstraints.fill = GridBagConstraints.BOTH;
+		scrollConstraints.gridx = 1;
+		scrollConstraints.gridy = 1;
+		scrollConstraints.gridwidth = 2;
+		scrollConstraints.insets = new Insets(0, 10, 5, 5);
+		contentPane.add(scrollPane, scrollConstraints);
 		
 		textMessage = new JTextField();
+		textMessage.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					send(textMessage.getText());
+				}
+			}
+		});
 		GridBagConstraints gbc_textMessage = new GridBagConstraints();
 		gbc_textMessage.insets = new Insets(0, 10, 0, 5);
 		gbc_textMessage.fill = GridBagConstraints.HORIZONTAL;
@@ -74,6 +93,11 @@ public class Client extends JFrame {
 		textMessage.setColumns(10);
 		
 		JButton btnSend = new JButton("Send");
+		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				send(textMessage.getText());
+			}
+		});
 		GridBagConstraints gbc_btnSend = new GridBagConstraints();
 		gbc_btnSend.insets = new Insets(0, 0, 0, 5);
 		gbc_btnSend.gridx = 2;
@@ -81,8 +105,24 @@ public class Client extends JFrame {
 		contentPane.add(btnSend, gbc_btnSend);
 		setVisible(true);
 		
-		requestFocus();
-		textMessage.requestFocus();
+		//requestFocus();
+		textMessage.requestFocusInWindow();
+	}
+	private void send(String message)
+	{
+		if(message.equals(""))
+			return;
+		else
+		{
+			message = name + ": " + message;
+			console(message);
+			textMessage.setText("");
+		}
+	}
+	public void console(String msg)
+	{
+		txtrHistory.append(msg + "\n");
+		txtrHistory.setCaretPosition(txtrHistory.getDocument().getLength());
 	}
 
 }
