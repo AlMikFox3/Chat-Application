@@ -70,9 +70,10 @@ public class Client extends JFrame {
 		GridBagConstraints scrollConstraints = new GridBagConstraints();
 		scrollConstraints.insets = new Insets(0, 0, 5, 5);
 		scrollConstraints.fill = GridBagConstraints.BOTH;
-		scrollConstraints.gridx = 1;
-		scrollConstraints.gridy = 1;
-		scrollConstraints.gridwidth = 2;
+		scrollConstraints.gridx = 0;
+		scrollConstraints.gridy = 0;
+		scrollConstraints.gridwidth = 3;
+		scrollConstraints.gridheight = 2;
 		scrollConstraints.insets = new Insets(0, 10, 5, 5);
 		contentPane.add(scrollPane, scrollConstraints);
 		
@@ -87,8 +88,9 @@ public class Client extends JFrame {
 		GridBagConstraints gbc_textMessage = new GridBagConstraints();
 		gbc_textMessage.insets = new Insets(0, 10, 0, 5);
 		gbc_textMessage.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textMessage.gridx = 1;
+		gbc_textMessage.gridx = 0;
 		gbc_textMessage.gridy = 2;
+		gbc_textMessage.gridwidth = 2;
 		contentPane.add(textMessage, gbc_textMessage);
 		textMessage.setColumns(10);
 		
